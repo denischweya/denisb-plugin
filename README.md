@@ -1,37 +1,41 @@
 # Denis B plugin
 
-Content types, fields and settings for the [Denis B theme](https://github.com/denischweya/denisb-theme), the WordPress version of [denis.swishfolio.com](https://denis.swishfolio.com/).
+Blocks and editor tools for the [Denis B theme](https://github.com/denischweya/denisb-theme), the WordPress version of [denis.swishfolio.com](https://denis.swishfolio.com/).
 
-The plugin holds the content and the theme handles the display. Activate both.
+Version 2 is built on [Swishfolio Core](https://github.com/denischweya/swishfolio-core). Swishfolio Core provides most of the content blocks: features, portfolio, CV, testimonials, FAQ and links. It also provides the case study post type. This plugin adds only what Swishfolio Core lacks. Everything is edited in the block editor; there are no settings pages or meta boxes.
 
-## What it adds
+Requires Swishfolio Core (declared with `Requires Plugins`), WordPress 6.7+ and PHP 8.0+.
 
-| Post type | Under **Denis B** in the admin | Used for |
-| --- | --- | --- |
-| `db_project` | Case studies | The featured project, the spotlight, the client work list and the case study pages at `/case-study/<slug>/` |
-| `db_product` | Products | The `/products/` catalogue, the Products mega menu, "Things I've shipped" on the homepage, and product landing pages at `/products/<slug>/` |
-| `db_experience` | Experience | The experience timeline |
-| `db_service` | Services | The services list |
-| `db_step` | Process steps | The process steps |
-| `db_testimonial` | Testimonials | Quotes |
-| `db_faq` | FAQs | The FAQ list |
+## Blocks
 
-Each type has its own fields in a meta box under the editor. All fields are registered with `show_in_rest`.
+| Block | Used for |
+| --- | --- |
+| `denisb/mega-menu` | The Products link in the header. Add it inside a Navigation block. It opens a panel of items, with a note and an "All products" link in the footer. |
+| `denisb/mega-menu-item` | One item in the mega menu: an icon image or letter, a label, a name, a description, a link and an optional badge. |
+| `denisb/product-catalog` | The `/products/` page: heading, intro, type filters with counts, and a grid of product cards. |
+| `denisb/product-card` | One theme or plugin in the catalogue: a screenshot, an icon or a letter tile. |
+| `denisb/theme-toggle` | The system, light and dark buttons. The choice is saved in the visitor's browser. |
+| `denisb/next-project` | The large "Next case study" link at the end of a case study. It follows the case studies' Order. |
 
-- **Order.** Display order is the **Order** attribute (`menu_order`). The admin lists sort by it.
-- **Product pages.** These use the block editor. Their sections are core blocks (groups, headings, paragraphs, buttons, images, lists, details) with the theme's class names, so they stay editable.
-- **Other types.** These use the classic editor.
+## Editor tools
 
-**Denis B → Site settings** holds the homepage copy:
+- **Rotating words.** Select text in a heading or paragraph, then choose **Rotating words** in the toolbar. Enter the words separated by commas. The theme animates them on the front end.
+- **SEO panel.** Pages, posts and case studies get an SEO panel in the document sidebar. It holds a title, a description and JSON-LD. The plugin prints the description, robots, Open Graph and Twitter tags, and the JSON-LD. Add post types with the `denisb/seo_post_types` filter.
 
-- The hero: name, role, availability, rotating words, intro, links.
-- The featured and spotlight projects.
-- Section headings.
-- The mega menu note.
-- The contact band.
-- SEO.
+## Case studies
 
-Old links in the form `/?project=<slug>` redirect to the matching case study.
+Case studies are Swishfolio Core projects (`sfcore_project`). This plugin changes how they behave:
+
+- They live at `/case-study/<slug>/`, with no archive.
+- They are labelled "Case studies".
+- They can be ordered with the **Order** attribute, and the admin list sorts by it.
+- Old `/?project=<slug>` links redirect to the matching case study.
+
+The client name and live URL use Swishfolio Core's project fields. The excerpt holds the stack line shown in the work list.
+
+## Swishfolio Core fixes
+
+Swishfolio Core's dynamic blocks (portfolio, latest posts, form) drop the block's extra classes on the front end. The plugin adds them back, so block style variations work on those blocks too.
 
 ## Importing content
 
@@ -39,25 +43,23 @@ Old links in the form `/?project=<slug>` redirect to the matching case study.
 wp denisb import content.json --media-dir=path/to/media --user=admin
 ```
 
-The importer updates posts with the same slug, so you can run it again safely. Values can reference:
+The file holds block markup. Running the import again updates posts with the same slug instead of duplicating them.
 
-- `media:relative/path.png`: the file is uploaded once, and its attachment ID is stored.
-- `{{media:relative/path.png}}` inside post content: replaced with the uploaded file's URL.
-- `post:<post_type>:<slug>`: replaced with that post's ID. Settings use this to point at projects.
+- `media` lists files by token. `{{media:<n>}}` becomes the file's URL. `9900<nnnn>` becomes the attachment ID, so block attributes like `"id":99000012` stay valid.
+- `term_tokens` lists terms as `taxonomy:slug`; `9800<nnnn>` becomes that term's ID.
+- `terms` creates terms. `posts` holds `type`, `slug`, `title`, `content`, `excerpt`, `order`, `parent`, `template`, `meta`, `terms` and `thumbnail`.
+- `options` sets options. A `post:<type>:<path>` value becomes that post's ID, for example `"page_on_front": "post:page:home"`.
 
-```json
-{
-  "posts": [
-    { "type": "db_faq", "slug": "rates", "title": "What are your rates?", "content": "…", "order": 1 }
-  ],
-  "settings": { "featured_project": "post:db_project:brandora" }
-}
-```
+Template parts can be imported as `wp_template_part` posts with the `wp_theme` term.
 
 ## Development
 
-- Requires WordPress 6.5+ and PHP 8.0+.
-- Field definitions live in `includes/fields.php`. You can extend them with the `denisb/post_fields` filter.
+```sh
+npm install
+npm run build   # or npm run start
+```
+
+Block sources are in `src/blocks`, and the editor tools are in `src/editor`. The compiled `build/` folder is committed, so the plugin works without a build step.
 
 ## License
 

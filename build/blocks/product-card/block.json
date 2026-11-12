@@ -1,0 +1,70 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "denisb/product-card",
+  "version": "2.0.0",
+  "title": "Product card",
+  "category": "design",
+  "icon": "products",
+  "description": "One theme or plugin in the products catalogue.",
+  "parent": [
+    "denisb/product-catalog"
+  ],
+  "textdomain": "denisb",
+  "attributes": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "theme",
+        "plugin"
+      ],
+      "default": "plugin"
+    },
+    "kind": {
+      "type": "string",
+      "default": ""
+    },
+    "name": {
+      "type": "string",
+      "default": ""
+    },
+    "desc": {
+      "type": "string",
+      "default": ""
+    },
+    "url": {
+      "type": "string",
+      "default": ""
+    },
+    "linkLabel": {
+      "type": "string",
+      "default": ""
+    },
+    "thumbStyle": {
+      "type": "string",
+      "enum": [
+        "shot",
+        "icon",
+        "letter"
+      ],
+      "default": "shot"
+    },
+    "imageId": {
+      "type": "number",
+      "default": 0
+    },
+    "imageUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "letter": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "supports": {
+    "html": false,
+    "reusable": false
+  },
+  "editorScript": "file:./index.js"
+}

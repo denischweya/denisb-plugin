@@ -1,0 +1,18 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "denisb/next-project",
+	"version": "2.0.0",
+	"title": "Next case study",
+	"category": "theme",
+	"icon": "arrow-right-alt",
+	"description": "A large link to the next case study, following the Order of case studies.",
+	"textdomain": "denisb",
+	"usesContext": [ "postId", "postType" ],
+	"attributes": {
+		"label": { "type": "string", "default": "Next case study" }
+	},
+	"supports": { "html": false },
+	"editorScript": "file:./index.js",
+	"render": "file:./render.php"
+}

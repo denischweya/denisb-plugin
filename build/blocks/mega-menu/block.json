@@ -1,0 +1,41 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "denisb/mega-menu",
+  "version": "2.0.0",
+  "title": "Mega menu",
+  "category": "design",
+  "icon": "screenoptions",
+  "description": "A menu link that opens a panel of items with icons and descriptions. Add it inside a Navigation block.",
+  "keywords": [
+    "products",
+    "menu",
+    "dropdown"
+  ],
+  "textdomain": "denisb",
+  "attributes": {
+    "label": {
+      "type": "string",
+      "default": "Products"
+    },
+    "url": {
+      "type": "string",
+      "default": "/products/"
+    },
+    "note": {
+      "type": "string",
+      "default": ""
+    },
+    "allLabel": {
+      "type": "string",
+      "default": "All products →"
+    }
+  },
+  "supports": {
+    "html": false,
+    "reusable": false
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "render": "file:./render.php"
+}

@@ -1,0 +1,16 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "denisb/theme-toggle",
+	"version": "2.0.0",
+	"title": "Theme switcher",
+	"category": "design",
+	"icon": "admin-appearance",
+	"description": "System, light and dark colour buttons. The choice is remembered in the visitor's browser.",
+	"keywords": [ "dark mode", "light", "colour" ],
+	"textdomain": "denisb",
+	"supports": { "html": false },
+	"editorScript": "file:./index.js",
+	"viewScript": "file:./view.js",
+	"render": "file:./render.php"
+}

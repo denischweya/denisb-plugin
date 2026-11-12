@@ -1,0 +1,12 @@
+/* Keep the panel open while you edit it. */
+.wp-block-denisb-mega-menu.is-editing .mm-panel {
+	opacity: 1;
+	visibility: visible;
+	pointer-events: auto;
+	transform: translate(-50%, 0);
+	z-index: 100;
+}
+.wp-block-denisb-mega-menu .mm-grid > .block-list-appender {
+	grid-column: 1 / -1;
+	position: static;
+}
